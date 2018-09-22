@@ -3,7 +3,7 @@ import React from 'react';
 const Label = props => {
   return (
     // JSX element
-    <label>{props.name}</label>
+    <label className='control-label'>{props.name}</label>
   );
 };
 

@@ -2,25 +2,33 @@ import React from 'react';
 import Button from './../components/Button.jsx';
 import EmailDetail from './../components/EmailDetail.jsx';
 import EmailList from './EmailList.jsx';
+import {get} from './../apis/apiHelper.js'
+import {connect} from 'react-redux'
 
 class Dashboard extends React.Component {
   state = {
-    emails: [
-      { subject: 'Subject 1', body: 'Body 1' },
-      { subject: 'Subject 2', body: 'Body 2' },
-      { subject: 'Subject 3', body: 'Body 3' },
-      { subject: 'Subject 4', body: 'Body 4' },
-      { subject: 'Subject 5', body: 'Body 5' }
-    ],
-    selected_email_id: 0
+    emailList: [],
+    selected_email: {id: null, subject: null, body: null}
   }
 
   showEmail = (evt) => {
     console.log(evt.target.id);
     this.setState(
-      { selected_email_id: evt.target.id }
+      {
+        selected_email: this.state.emailList.find((email => email.id == evt.target.id))
+      }
     )
-  }  
+  }
+
+  componentDidMount() {
+    get("http://d4cb1993.ngrok.io/mails/inbox/", "", { Authorization: this.props.token })
+      .then(jsonResponse => {
+        this.setState({ emailList: jsonResponse.data });
+      })
+      .catch(errorResponse => {
+        console.log("2222222222222222", errorResponse);
+      });
+  }
 
   render (){
     return (
@@ -28,12 +36,17 @@ class Dashboard extends React.Component {
         <h1>The Dashboard</h1>
         <Button value='Logout' handleOnClick={this.props.logout} />
         <br />
-        <EmailList emails={this.state.emails} showEmail={this.showEmail} />
+        <EmailList emails={this.state.emailList} showEmail={this.showEmail} />
         <br />
-        <EmailDetail email={this.state.emails[this.state.selected_email_id]} />
+        <EmailDetail email={this.state.selected_email} />
       </div>
     )
   }
 }
 
-export default Dashboard
+const mapStateToProps = (state) => {
+  console.log(state, '111')
+  return state.emailReducer
+}
+
+export default connect(mapStateToProps, {})(Dashboard);

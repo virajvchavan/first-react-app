@@ -8,9 +8,9 @@ const EmailDetail = props => {
         <tbody>
           {props.emails.map((email, index) =>
             (
-              <tr key={index}>
+              <tr key={email.id}>
                 <td>{email.subject}</td>
-                <td><Button value='View' id={index} handleOnClick={props.showEmail} /></td>
+                <td><Button value='View' id={email.id} handleOnClick={props.showEmail} /></td>
               </tr>
             )
           )}
