@@ -4,6 +4,7 @@ import EmailDetail from './../components/EmailDetail.jsx';
 import EmailList from './EmailList.jsx';
 import {get} from './../apis/apiHelper.js'
 import {connect} from 'react-redux'
+import {fetchEmails} from './../action_creators/emailActionCreators.js'
 
 class Dashboard extends React.Component {
   state = {
@@ -32,7 +33,7 @@ class Dashboard extends React.Component {
 
   render (){
     return (
-      <div>
+      <div className='container'>
         <h1>The Dashboard</h1>
         <Button value='Logout' handleOnClick={this.props.logout} />
         <br />
@@ -49,4 +50,6 @@ const mapStateToProps = (state) => {
   return state.emailReducer
 }
 
-export default connect(mapStateToProps, {})(Dashboard);
+export default connect(mapStateToProps, {
+  fetchEmails: fetchEmails
+})(Dashboard);

@@ -4,7 +4,7 @@ import Button from './../components/Button.jsx'
 const EmailDetail = props => {
   return (
     <div>
-      <table>
+      <table className='table'>
         <tbody>
           {props.emails.map((email, index) =>
             (
