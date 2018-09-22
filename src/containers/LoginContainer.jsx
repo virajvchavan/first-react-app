@@ -19,7 +19,7 @@ class LoginContainer extends React.Component {
     this.setState(
       { 
         // evt gets all the info related to the element on which handleOnChange is originally called on
-        [evt.target.name] : evt.target.value 
+        [evt.target.name] : evt.target.value
       }, 
       () => {
         // callback
